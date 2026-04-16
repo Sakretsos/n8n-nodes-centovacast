@@ -28,8 +28,8 @@ If you are running n8n in Docker, follow these steps:
 **1. Build the package (if not already built)**
 
 ```bash
-git clone https://github.com/itavernarakis/n8n-centovacast.git
-cd n8n-centovacast
+git clone https://github.com/Sakretsos/n8n-nodes-centovacast.git
+cd n8n-nodes-centovacast
 npm install
 npm run build
 npm pack
@@ -41,40 +41,40 @@ This will create a `n8n-nodes-centovacast-0.1.0.tgz` file.
 
 ```bash
 # Create the target directory (first time only)
-docker exec -it n8n-n8n-1 sh -c "mkdir -p /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast"
+docker exec -it n8n sh -c "mkdir -p /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast"
 
 # Copy the tgz into the container
-docker cp n8n-nodes-centovacast-0.1.0.tgz n8n-n8n-1:/tmp/
+docker cp n8n-nodes-centovacast-0.1.0.tgz n8n:/tmp/
 
 # Extract and install
-docker exec -it n8n-n8n-1 sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
+docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
 
 # Restart n8n to load the new node
-docker restart n8n-n8n-1
+docker restart n8n
 ```
 
-> **Note:** Replace `n8n-n8n-1` with your actual n8n container name. You can find it with `docker ps`.
+> **Note:** Replace `n8n` with your actual n8n container name. You can find it with `docker ps`.
 
 **3. Updating to a new version**
 
 ```bash
 # Clear the old version
-docker exec -it n8n-n8n-1 sh -c "rm -rf /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/*"
+docker exec -it n8n sh -c "rm -rf /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/*"
 
 # Copy and extract the new tgz
 docker cp n8n-nodes-centovacast-0.1.0.tgz n8n-n8n-1:/tmp/
-docker exec -it n8n-n8n-1 sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
+docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
 
 # Restart n8n
-docker restart n8n-n8n-1
+docker restart n8n
 ```
 
 ### Building from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/itavernarakis/n8n-centovacast.git
-cd n8n-centovacast
+git clone https://github.com/Sakretsos/n8n-nodes-centovacast.git
+cd n8n-nodes-centovacast
 
 # Install dependencies
 npm install
