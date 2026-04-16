@@ -9,6 +9,7 @@ Centova Cast is a web-based control panel for internet radio stations that suppo
 ## Table of Contents
 
 - [Installation](#installation)
+  - [Community Nodes (Recommended)](#community-nodes-recommended)
   - [Docker Installation](#docker-installation)
   - [Building from Source](#building-from-source)
 - [Credentials](#credentials)
@@ -20,6 +21,16 @@ Centova Cast is a web-based control panel for internet radio stations that suppo
 - [License](#license)
 
 ## Installation
+
+### Community Nodes (Recommended)
+
+1. Open your n8n instance
+2. Go to **Settings** > **Community Nodes**
+3. Click **Install a community node**
+4. Enter `n8n-nodes-centovacast` and click **Install**
+5. The node will be available immediately — no restart required
+
+> **Note:** Community Nodes is available from n8n version 0.187.0 and above.
 
 ### Docker Installation
 
@@ -62,7 +73,7 @@ docker restart n8n
 docker exec -it n8n sh -c "rm -rf /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/*"
 
 # Copy and extract the new tgz
-docker cp n8n-nodes-centovacast-0.1.0.tgz n8n-n8n-1:/tmp/
+docker cp n8n-nodes-centovacast-0.1.0.tgz n8n:/tmp/
 docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
 
 # Restart n8n
