@@ -1,0 +1,48 @@
+{
+	"name": "n8n-nodes-centovacast",
+	"version": "0.1.0",
+	"description": "n8n community node for Centova Cast streaming server management API",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"centovacast",
+		"centova",
+		"streaming",
+		"radio",
+		"shoutcast",
+		"icecast"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "Ioannis Tavernarakis",
+		"email": "ioannis@tavernarakis.eu"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"prepublishOnly": "npm run build",
+		"lint": "tsc --noEmit"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/CentovaCastApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/CentovaCast/CentovaCast.node.js"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^20.0.0",
+		"gulp": "^4.0.2",
+		"n8n-workflow": "^1.0.0",
+		"typescript": "^5.0.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
