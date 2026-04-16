@@ -768,7 +768,8 @@ export class CentovaCast implements INodeType {
 				if (resource === 'server') {
 					const accountUsername = this.getNodeParameter('accountUsername', i) as string;
 					params['username'] = accountUsername;
-					params['password'] = credentials.password as string;
+					// Use admin|password format so the admin can manage any account
+					params['password'] = `admin|${credentials.password as string}`;
 				} else {
 					// System class uses admin password
 					params['username'] = credentials.username as string;
