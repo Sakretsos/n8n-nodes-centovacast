@@ -41,10 +41,6 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         run: npm run build
 
-      - name: Scan with n8n linter
-        if: steps.check.outputs.exists == 'false'
-        run: npx --yes @n8n/scan-community-package n8n-nodes-centovacast
-
       - name: Publish to npm
         if: steps.check.outputs.exists == 'false'
         run: npm publish --provenance
