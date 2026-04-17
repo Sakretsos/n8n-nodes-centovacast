@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-centovacast",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "n8n community node for Centova Cast streaming server management API",
 	"keywords": [
 		"n8n-community-node-package",
@@ -26,7 +26,8 @@
 		"build": "tsc && gulp build:icons",
 		"dev": "tsc --watch",
 		"prepublishOnly": "npm run build",
-		"lint": "tsc --noEmit"
+		"lint": "tsc --noEmit",
+		"test": "echo \"No tests yet\" && exit 0"
 	},
 	"files": [
 		"dist"
@@ -41,6 +42,8 @@
 		]
 	},
 	"devDependencies": {
+		"@n8n/eslint-config": "^0.2.0",
+		"@n8n/node-cli": "^0.23.0",
 		"@types/node": "^20.0.0",
 		"gulp": "^4.0.2",
 		"n8n-workflow": "^1.0.0",
