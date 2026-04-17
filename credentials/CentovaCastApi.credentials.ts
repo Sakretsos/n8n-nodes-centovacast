@@ -3,7 +3,6 @@ import {
 	INodeProperties,
 	ICredentialDataDecryptedObject,
 	IHttpRequestOptions,
-	ICredentialTestRequest,
 } from 'n8n-workflow';
 
 export class CentovaCastApi implements ICredentialType {
@@ -12,27 +11,11 @@ export class CentovaCastApi implements ICredentialType {
 	documentationUrl = 'https://centova.com/doc/cast/internals/API_Reference';
 	icon = 'file:centovaCast.png' as const;
 
-	async authenticate(credentials: ICredentialDataDecryptedObject, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions> {
-		const baseUrl = (credentials.baseUrl as string).replace(/\/+$/, '');
-		const params = new URLSearchParams({
-			xm: 'system.version',
-			f: 'json',
-			'a[username]': credentials.username as string,
-			'a[password]': credentials.password as string,
-		});
-		requestOptions.url = `${baseUrl}/api.php`;
-		requestOptions.method = 'POST';
-		requestOptions.body = params.toString();
-		requestOptions.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+	async authenticate(_credentials: ICredentialDataDecryptedObject, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions> {
 		return requestOptions;
 	}
 
-	test: ICredentialTestRequest = {
-		request: {
-			url: '',
-			method: 'POST',
-		},
-	};
+	testedBy = 'centovaCastApiTest';
 
 	properties: INodeProperties[] = [
 		{

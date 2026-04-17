@@ -1,10 +1,15 @@
 import {
+	ICredentialDataDecryptedObject,
+	ICredentialsDecrypted,
 	IExecuteFunctions,
+	INodeCredentialTestResult,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 	NodeApiError,
 } from 'n8n-workflow';
+
+import type { ICredentialTestFunctions } from 'n8n-workflow';
 
 export class CentovaCast implements INodeType {
 	description: INodeTypeDescription = {
@@ -746,6 +751,36 @@ export class CentovaCast implements INodeType {
 			// --- imaged ---
 			// Omitted: imaged is a very specialized internal method, unlikely to be useful in n8n workflows.
 		],
+	};
+
+	methods = {
+		credentialTest: {
+			async centovaCastApiTest(this: ICredentialTestFunctions, credential: ICredentialsDecrypted): Promise<INodeCredentialTestResult> {
+				const { baseUrl, username, password } = credential.data as ICredentialDataDecryptedObject;
+				const url = (baseUrl as string).replace(/\/+$/, '');
+				const params = new URLSearchParams({
+					xm: 'system.version',
+					f: 'json',
+					'a[username]': username as string,
+					'a[password]': password as string,
+				});
+				try {
+					const response = await this.helpers.request({
+						method: 'POST',
+						uri: `${url}/api.php`,
+						body: params.toString(),
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						json: true,
+					});
+					if (response.type === 'error') {
+						return { status: 'Error', message: response.response?.message || 'Authentication failed' };
+					}
+					return { status: 'OK', message: 'Connection successful' };
+				} catch (error) {
+					return { status: 'Error', message: (error as Error).message };
+				}
+			},
+		},
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
