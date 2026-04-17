@@ -1,6 +1,8 @@
 import {
 	ICredentialType,
 	INodeProperties,
+	ICredentialDataDecryptedObject,
+	IHttpRequestOptions,
 } from 'n8n-workflow';
 
 export class CentovaCastApi implements ICredentialType {
@@ -8,6 +10,11 @@ export class CentovaCastApi implements ICredentialType {
 	displayName = 'Centova Cast API';
 	documentationUrl = 'https://centova.com/doc/cast/internals/API_Reference';
 	icon = 'file:centovaCast.png' as const;
+
+	// Authentication is handled in the node via form body parameters
+	async authenticate(_credentials: ICredentialDataDecryptedObject, requestOptions: IHttpRequestOptions): Promise<IHttpRequestOptions> {
+		return requestOptions;
+	}
 
 	properties: INodeProperties[] = [
 		{

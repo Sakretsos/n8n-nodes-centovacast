@@ -751,11 +751,11 @@ export class CentovaCast implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
-		const credentials = await this.getCredentials('centovaCastApi');
-		const baseUrl = (credentials.baseUrl as string).replace(/\/+$/, '');
 
 		for (let i = 0; i < items.length; i++) {
 			try {
+				const credentials = await this.getCredentials('centovaCastApi');
+				const baseUrl = (credentials.baseUrl as string).replace(/\/+$/, '');
 				const resource = this.getNodeParameter('resource', i) as string;
 				const operation = this.getNodeParameter('operation', i) as string;
 				const method = `${resource}.${operation}`;
@@ -983,7 +983,7 @@ export class CentovaCast implements INodeType {
 					formData[`a[${k}]`] = v as string;
 				}
 
-				const response = await this.helpers.httpRequest({
+				const response = await this.helpers.httpRequestWithAuthentication.call(this, 'centovaCastApi', {
 					method: 'POST',
 					url: `${baseUrl}/api.php`,
 					body: new URLSearchParams(formData).toString(),
