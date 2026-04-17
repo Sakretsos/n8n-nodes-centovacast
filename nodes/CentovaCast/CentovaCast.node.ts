@@ -3,7 +3,6 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	IHttpRequestMethods,
 	NodeApiError,
 } from 'n8n-workflow';
 
@@ -976,15 +975,21 @@ export class CentovaCast implements INodeType {
 				}
 
 				// Use POST for security (passwords in body, not URL logs)
-				const response = await this.helpers.request({
-					method: 'POST' as IHttpRequestMethods,
+				const formData: Record<string, string> = {
+					xm: method,
+					f: 'json',
+				};
+				for (const [k, v] of Object.entries(params)) {
+					formData[`a[${k}]`] = v as string;
+				}
+
+				const response = await this.helpers.httpRequest({
+					method: 'POST',
 					url: `${baseUrl}/api.php`,
-					form: Object.fromEntries([
-						['xm', method],
-						['f', 'json'],
-						...Object.entries(params).map(([k, v]) => [`a[${k}]`, v]),
-					]),
-					json: true,
+					body: new URLSearchParams(formData).toString(),
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
 				});
 
 				if (response.type === 'error') {

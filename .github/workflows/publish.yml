@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -37,8 +41,12 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         run: npm run build
 
+      - name: Scan with n8n linter
+        if: steps.check.outputs.exists == 'false'
+        run: npx --yes @n8n/scan-community-package n8n-nodes-centovacast
+
       - name: Publish to npm
         if: steps.check.outputs.exists == 'false'
-        run: npm publish
+        run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
