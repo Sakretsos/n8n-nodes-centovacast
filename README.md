@@ -46,7 +46,7 @@ npm run build
 npm pack
 ```
 
-This will create a `n8n-nodes-centovacast-0.1.0.tgz` file.
+This will create a `n8n-nodes-centovacast-0.2.0.tgz` file.
 
 **2. Install into your n8n Docker container**
 
@@ -55,10 +55,10 @@ This will create a `n8n-nodes-centovacast-0.1.0.tgz` file.
 docker exec -it n8n sh -c "mkdir -p /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast"
 
 # Copy the tgz into the container
-docker cp n8n-nodes-centovacast-0.1.0.tgz n8n:/tmp/
+docker cp n8n-nodes-centovacast-0.2.0.tgz n8n:/tmp/
 
 # Extract and install
-docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
+docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.2.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
 
 # Restart n8n to load the new node
 docker restart n8n
@@ -73,8 +73,8 @@ docker restart n8n
 docker exec -it n8n sh -c "rm -rf /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/*"
 
 # Copy and extract the new tgz
-docker cp n8n-nodes-centovacast-0.1.0.tgz n8n:/tmp/
-docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.1.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
+docker cp n8n-nodes-centovacast-0.2.0.tgz n8n:/tmp/
+docker exec -it n8n sh -c "cd /tmp && tar xzf n8n-nodes-centovacast-0.2.0.tgz && cp -r package/* /home/node/.n8n/custom/node_modules/n8n-nodes-centovacast/"
 
 # Restart n8n
 docker restart n8n
@@ -217,7 +217,7 @@ For full API documentation, visit: https://centova.com/doc/cast/internals/API_Re
 ## Compatibility
 
 - **n8n version:** 1.0.0+
-- **Node.js version:** 18+
+- **Node.js version:** 22+
 - **Centova Cast version:** 3.x
 
 ## License
