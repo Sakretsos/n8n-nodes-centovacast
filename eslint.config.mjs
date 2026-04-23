@@ -1,6 +1,3 @@
-import n8nPlugin from '@n8n/eslint-plugin-community-nodes';
+import { config } from '@n8n/node-cli/eslint';
 
-export default [
-	{ ignores: ['copy-icons.js'] },
-	n8nPlugin.configs.recommended,
-];
+export default config;
