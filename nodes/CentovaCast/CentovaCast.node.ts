@@ -4,11 +4,7 @@ import {
 } from 'n8n-workflow';
 
 import type {
-	ICredentialDataDecryptedObject,
-	ICredentialsDecrypted,
-	ICredentialTestFunctions,
 	IExecuteFunctions,
-	INodeCredentialTestResult,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
@@ -23,7 +19,7 @@ export class CentovaCast implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Centova Cast',
 		name: 'centovaCast',
-		icon: 'file:../../icons/centovaCast.png',
+		icon: 'file:../../icons/centovaCast.svg',
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
@@ -63,43 +59,6 @@ export class CentovaCast implements INodeType {
 			...serverProperties,
 			...systemProperties,
 		],
-	};
-
-	methods = {
-		credentialTest: {
-			async centovaCastApiTest(
-				this: ICredentialTestFunctions,
-				credential: ICredentialsDecrypted,
-			): Promise<INodeCredentialTestResult> {
-				const { baseUrl, username, password } =
-					credential.data as ICredentialDataDecryptedObject;
-				const url = (baseUrl as string).replace(/\/+$/, '');
-				const params = new URLSearchParams({
-					xm: 'system.version',
-					f: 'json',
-					'a[username]': username as string,
-					'a[password]': password as string,
-				});
-				try {
-					const response = await this.helpers.request({
-						method: 'POST',
-						uri: `${url}/api.php`,
-						body: params.toString(),
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-						json: true,
-					});
-					if (response.type === 'error') {
-						return {
-							status: 'Error',
-							message: response.response?.message || 'Authentication failed',
-						};
-					}
-					return { status: 'OK', message: 'Connection successful' };
-				} catch (error) {
-					return { status: 'Error', message: (error as Error).message };
-				}
-			},
-		},
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {

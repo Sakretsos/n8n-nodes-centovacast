@@ -1,5 +1,6 @@
 import type {
 	ICredentialDataDecryptedObject,
+	ICredentialTestRequest,
 	ICredentialType,
 	IHttpRequestOptions,
 	INodeProperties,
@@ -12,7 +13,7 @@ export class CentovaCastApi implements ICredentialType {
 
 	documentationUrl = 'https://centova.com/doc/cast/internals/API_Reference';
 
-	icon = 'file:../icons/centovaCast.png' as const;
+	icon = 'file:../icons/centovaCast.svg' as const;
 
 	async authenticate(
 		_credentials: ICredentialDataDecryptedObject,
@@ -21,7 +22,15 @@ export class CentovaCastApi implements ICredentialType {
 		return requestOptions;
 	}
 
-	testedBy = 'centovaCastApiTest';
+	test: ICredentialTestRequest = {
+		request: {
+			method: 'POST',
+			url: '={{$credentials.baseUrl.replace(/\\/+$/, "")}}/api.php',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body:
+				'xm=system.version&f=json&a[username]={{$credentials.username}}&a[password]={{$credentials.password}}',
+		},
+	};
 
 	properties: INodeProperties[] = [
 		{
