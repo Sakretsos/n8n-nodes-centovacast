@@ -1,13 +1,11 @@
 import {
 	NodeConnectionTypes,
 	NodeApiError,
-} from 'n8n-workflow';
-
-import type {
-	IExecuteFunctions,
-	INodeExecutionData,
-	INodeType,
-	INodeTypeDescription,
+	type JsonObject,
+	type IExecuteFunctions,
+	type INodeExecutionData,
+	type INodeType,
+	type INodeTypeDescription,
 } from 'n8n-workflow';
 
 import { centovaCastApiRequest } from './shared/transport';
@@ -114,7 +112,7 @@ export class CentovaCast implements INodeType {
 					});
 					continue;
 				}
-				throw error;
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		}
 
