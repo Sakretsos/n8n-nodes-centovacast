@@ -13,7 +13,7 @@ export class CentovaCastApi implements ICredentialType {
 
 	documentationUrl = 'https://centova.com/doc/cast/internals/API_Reference';
 
-	icon = 'file:../icons/centovaCast.svg' as const;
+	icon = 'file:../nodes/CentovaCast/centovaCast.svg' as const;
 
 	async authenticate(
 		_credentials: ICredentialDataDecryptedObject,

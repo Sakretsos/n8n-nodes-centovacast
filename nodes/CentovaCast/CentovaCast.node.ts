@@ -17,7 +17,7 @@ export class CentovaCast implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Centova Cast',
 		name: 'centovaCast',
-		icon: 'file:../../icons/centovaCast.svg',
+		icon: 'file:centovaCast.svg',
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
@@ -94,6 +94,7 @@ export class CentovaCast implements INodeType {
 				if (response.type === 'error') {
 					throw new NodeApiError(this.getNode(), response as Record<string, never>, {
 						message: response.response?.message || 'Unknown API error',
+						itemIndex: i,
 					});
 				}
 
@@ -112,7 +113,7 @@ export class CentovaCast implements INodeType {
 					});
 					continue;
 				}
-				throw new NodeApiError(this.getNode(), error as JsonObject);
+				throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
 			}
 		}
 
